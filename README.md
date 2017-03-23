@@ -1,2 +1,2 @@
 # AppEngineKotlin
-Example project using Kotlin and Gradle in Google App Engine Standard Environment
+Example project setup for Google App Engine standard environment that uses Dagger2, Kotlin and Gradle
