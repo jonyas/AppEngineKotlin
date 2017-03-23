@@ -1,0 +1,11 @@
+target/
+classes/
+/var
+.idea
+.DS_Store
+*~
+# Gradle files
+.gradle/
+build/
+/*/build/
+

@@ -1,0 +1,75 @@
+buildscript {
+
+    ext.kotlin = '1.1.1'
+    ext.appengine = '1.9.49'
+    ext.endpoints = '2.0.3'
+    ext.javax_servlet = '2.5'
+    ext.javax_inject = '1'
+    ext.dagger = '2.4'
+
+    ext.assertj = '3.6.2'
+    ext.junit = '4.12'
+    ext.mockito = '2.7.11'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.google.appengine:gradle-appengine-plugin:$appengine"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
+    }
+}
+
+repositories {
+    maven {
+        url 'https://maven-central.storage.googleapis.com'
+    }
+    jcenter()
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'appengine'
+
+// Add kapt directory to sources
+sourceSets.main.java.srcDir file("$buildDir/generated/source/kapt/")
+idea {
+    module {
+        // Tell idea to mark the folder as generated sources
+        generatedSourceDirs += file("$buildDir/generated/source/kapt/")
+    }
+}
+
+dependencies {
+    appengineSdk "com.google.appengine:appengine-java-sdk:$appengine"
+    compile "com.google.endpoints:endpoints-framework:$endpoints"
+
+    providedCompile "javax.servlet:servlet-api:$javax_servlet"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin"
+    compile "javax.inject:javax.inject:$javax_inject"
+    compile "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+
+    testCompile "org.assertj:assertj-core:$assertj"
+    testCompile "com.google.appengine:appengine-testing:$appengine"
+    testCompile "com.google.appengine:appengine-api-stubs:$appengine"
+    testCompile "junit:junit:$junit"
+    testCompile "org.mockito:mockito-core:$mockito"
+}
+
+appengine {
+    downloadSdk = true
+    // Used to allow usage of debugger
+    jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000']
+}
+
+sourceCompatibility = 1.7  // App Engine Standard uses Java 7. Needed to upload it to appEngine
+targetCompatibility = 1.7  // App Engine Standard uses Java 7. Needed to upload it to appEngine
