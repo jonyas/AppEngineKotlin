@@ -8,6 +8,6 @@ You need to have JDK8 installed.
 ## How to run?
 
 - Clone project
-- Inside project folder run ```./gradlew appengineRun```
+- Inside project folder run ```./gradlew appengineRun``` More Gradle plugin [commands](https://github.com/GoogleCloudPlatform/gradle-appengine-plugin)
 - Wait project to build
 - Open in browser [http://localhost:8080/_ah/api/kotlin/v1/greetings/me](http://localhost:8080/_ah/api/kotlin/v1/greetings/me)
